@@ -20,42 +20,21 @@ jobs:
           api-level: 33
           build-tools: 33.0.2
           target: default
-          cmake: "default"
 
-      - name: Install additional Android build tools
-        run: sudo apt-get install -y android-sdk-build-tools
-
-      - name: General information
+      - name: Install Android SDK Platform 33
         run: |
-          java --version
-          d8 --version
+          sdkmanager "platforms;android-33" "build-tools;33.0.2"
+
+      - name: Check Android SDK Installation
+        run: ls -la $ANDROID_SDK_ROOT/platforms/android-33
 
       - name: Build and dexify mod jar file
         run: |
           chmod +x gradlew
-          ./gradlew main:deploy main:dex tools:proc
+          ./gradlew main:deploy main:dex tools:proc --info
 
       - name: Upload built mod jar file
         uses: actions/upload-artifact@v4
         with:
           name: ProjectUnity (zipped)
           path: main/build/libs/ProjectUnity.jar
-
-      - name: Make a tag name
-        if: github.ref == 'refs/heads/master'
-        run: echo "tag=$(date +%Y%m%d%H%M%S)" >> $GITHUB_ENV
-
-      - name: Create blank release
-        if: github.ref == 'refs/heads/master'
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: |
-          tag_name=$(date +%Y%m%d%H%M%S)
-          echo "Creating release with tag: $tag_name"
-          gh release create "$tag_name" -t "Project Unity Release" -n "Automated release for Project Unity."
-
-      - name: Add JAR to Release
-        uses: softprops/action-gh-release@v1
-        if: github.ref == 'refs/heads/master'
-        with:
-          files: main/build/libs/ProjectUnity.jar
