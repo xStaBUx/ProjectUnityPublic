@@ -1,4 +1,6 @@
-# Project Unity
+# Buildable Project Unity
+
+> [Project Unity Public](https://github.com/AvantTeam/ProjectUnityPublic) fork with fixed building issues so the mod can actually run
 
 [![Discord](https://img.shields.io/discord/782583108473978880.svg?color=7289da&label=AvantTeam&logo=discord&style=flat-square)](https://discord.gg/V6ygvgGVqE)
 
