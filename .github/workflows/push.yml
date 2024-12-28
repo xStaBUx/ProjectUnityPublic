@@ -17,6 +17,9 @@ jobs:
     - name: Set up PATH
       run: echo "${ANDROID_HOME}/build-tools/30.0.1" >> $GITHUB_PATH
 
+    - name: install android build tools
+      run: sudo apt-get install -y android-sdk-build-tools
+
     - name: General information
       run: |
         java --version
